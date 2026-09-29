@@ -31,6 +31,7 @@ export interface Garment {
   category: 'upper_body' | 'full_body' | 'lower_body';
   occasions: string[];
   blurb: string;
+  tones: ('warm' | 'cool' | 'neutral')[];
 }
 export interface Occasion {
   id: string;

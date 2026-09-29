@@ -28,6 +28,7 @@ export default function SkinLab({ lang, demo }: { lang: Lang; demo: boolean | un
   const [result, setResult] = useState<SkinResult | null>(null);
   const [error, setError] = useState('');
   const [saved, setSaved] = useState(false);
+  const [sheet, setSheet] = useState<string | null>(null);
 
   const onCapture = (f: File) => {
     if (preview) URL.revokeObjectURL(preview);
@@ -152,16 +153,19 @@ export default function SkinLab({ lang, demo }: { lang: Lang; demo: boolean | un
             </div>
           </div>
 
-          {/* concerns */}
+          {/* concerns — tap any row for the ingredient education card */}
           <div className="glass mt-4 rounded-3xl p-6 sm:p-8">
             <h3 className="font-display mb-1 text-xl font-semibold">{t(lang, 'skin_concerns')}</h3>
             <p className="mb-5 text-xs text-white/40">{t(lang, 'skin_derived')}</p>
             <div className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
               {sorted.map((c) => (
-                <div key={c.id}>
+                <button key={c.id} onClick={() => setSheet(c.id)} className="group rounded-2xl p-2 text-left transition hover:bg-white/5">
                   <ScoreBar label={concernMeta(c.id, lang).label} value={c.score} />
-                  <p className="mt-1 text-xs leading-relaxed text-white/50">{concernMeta(c.id, lang).tip}</p>
-                </div>
+                  <p className="mt-1 text-xs leading-relaxed text-white/50">
+                    {concernMeta(c.id, lang).tip}{' '}
+                    <span className="text-blush-200/80 underline-offset-2 group-hover:underline">{t(lang, 'ing_learn')}</span>
+                  </p>
+                </button>
               ))}
             </div>
           </div>
@@ -214,6 +218,40 @@ export default function SkinLab({ lang, demo }: { lang: Lang; demo: boolean | un
           <p className="mx-auto mt-6 max-w-xl text-center text-xs leading-relaxed text-white/35">
             {t(lang, 'home_disclaimer')}
           </p>
+
+          {/* ingredient education bottom sheet */}
+          {sheet && (() => {
+            const meta = concernMeta(sheet, lang);
+            return (
+              <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/65 p-4 sm:items-center" onClick={() => setSheet(null)}>
+                <div className="glass fade-up w-full max-w-lg rounded-3xl border-blush-300/25 p-6 sm:p-7" onClick={(e) => e.stopPropagation()}>
+                  <p className="text-[11px] font-semibold uppercase tracking-widest text-blush-200">{t(lang, 'ing_card')}</p>
+                  <h3 className="font-display mt-1 text-2xl font-semibold">{meta.label}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-white/65">{meta.about}</p>
+                  <h4 className="mt-5 text-sm font-semibold text-blush-100">✦ {t(lang, 'ing_helps')}</h4>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {meta.ingredients.map((ing) => (
+                      <span key={ing} className="rounded-full border border-blush-300/30 bg-blush-300/10 px-3.5 py-1.5 text-[13px]">
+                        {ing}
+                      </span>
+                    ))}
+                  </div>
+                  <h4 className="mt-5 text-sm font-semibold text-white/75">✦ {t(lang, 'ing_avoid')}</h4>
+                  <ul className="mt-2 space-y-1.5">
+                    {meta.avoid.map((a) => (
+                      <li key={a} className="flex gap-2 text-[13px] text-white/60">
+                        <span className="text-white/35">—</span>{a}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-5 text-[11px] leading-relaxed text-white/35">{t(lang, 'home_disclaimer')}</p>
+                  <button onClick={() => setSheet(null)} className="btn-primary mt-4 w-full rounded-2xl py-3 text-sm">
+                    {t(lang, 'c_close')}
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
         </div>
       )}
     </div>

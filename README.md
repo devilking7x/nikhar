@@ -12,10 +12,11 @@ Built for the **YouCam API Skin AI & Apparel VTO Hackathon 2026**.
 
 | Area | What it does |
 |---|---|
-| **Skin Lab** | Guided live camera (face-oval overlay, 3s auto-capture) or upload → 12-concern YouCam analysis, glow score gauge, skin-age card, per-concern tips, rule-based AM/PM routine |
-| **Shade Matcher** | Undertone quiz + AI skin-tone detection (JPG) → foundation shade families with example matches |
-| **Try-On Studio** | Your photo + catalog garment (6 AI-generated pieces) or your own upload → before/after drag slider |
-| **Complete Look** | One transparent flow: skin scan → occasion → visible stylist reasoning steps → VTO render → verdict |
+| **Skin Lab** | Guided live camera (face-oval overlay, 3s auto-capture) or upload → 12-concern YouCam analysis, glow score gauge, skin-age card, per-concern tips, rule-based AM/PM routine. **Tap any concern → ingredient education card** (what it is, what helps, what to avoid) |
+| **Shade Matcher** | Undertone quiz + AI skin-tone detection (JPG) → foundation shade families with example matches → **rule-based color recommendations**: catalog pieces sorted by your undertone's color-temperature |
+| **Try-On Studio** | Your photo + catalog garment (6 AI-generated pieces) or your own upload → before/after drag slider. **All 6 garments have demo renders**, clearly labeled |
+| **Complete Look** | One transparent flow: skin scan → occasion → visible stylist reasoning steps → VTO render → verdict. **Indian look packs**: Diwali Glow, Shaadi Season, Office Ethnic, College Casual — each with styling notes + skin-prep tips |
+| **⚡ 60-Second Tour** | Judge quick tour on the homepage — guided auto walkthrough of every key page, skippable anytime |
 | **Progress** | Glow-score trend chart + scan history in localStorage |
 | **Lookbook** | Save styled looks locally; share/download |
 | **Glow Report** | Downloadable/shareable PNG report (Web Share API with download fallback) |

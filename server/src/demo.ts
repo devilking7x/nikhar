@@ -29,6 +29,10 @@ export const DEMO_TONE_COLOR = '#c68e5e';
 
 /** Demo try-on results (AI-generated sample renders, clearly labeled in UI). */
 export const DEMO_VTO: Record<string, string> = {
-  'dress-rose': '/garments/demo-vto-dress.jpg',
+  'tshirt-blush': '/garments/demo-vto-tshirt.jpg',
+  'jacket-indigo': '/garments/demo-vto-jacket.jpg',
+  'blazer-lavender': '/garments/demo-vto-blazer.jpg',
   'kurta-maroon': '/garments/demo-vto-kurta.jpg',
+  'dress-rose': '/garments/demo-vto-dress.jpg',
+  'lehenga-emerald': '/garments/demo-vto-lehenga.jpg',
 };

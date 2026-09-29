@@ -121,6 +121,40 @@ const en: Record<string, string> = {
   look_saved: 'Saved to your lookbook',
   look_new: 'New look',
 
+  // judge quick tour
+  tour_btn: '⚡ 60-Second Tour',
+  tour_skip: 'Skip tour',
+  tour_next: 'Next',
+  tour_back: 'Back',
+  tour_start: 'Start tour',
+  tour_1t: 'Skin Lab — know your skin',
+  tour_1d: 'A guided selfie becomes a 12-concern AI skin analysis with glow score, skin age and a personal routine.',
+  tour_2t: 'Shade Match — your undertone',
+  tour_2d: 'A 3-question quiz plus AI tone detection finds your undertone and foundation shades.',
+  tour_3t: 'Try-On Studio — wear it first',
+  tour_3d: 'Try catalog outfits on your photo with a draggable before/after slider.',
+  tour_4t: 'Complete Look — the AI stylist',
+  tour_4d: 'One flow: skin scan → occasion → visible stylist reasoning → rendered try-on → verdict.',
+  tour_5t: 'Track it — progress & lookbook',
+  tour_5d: 'Re-scan to watch your glow trend, save favourite looks, and share your glow report.',
+
+  // indian look packs
+  pack_title: 'Curated look packs',
+  pack_sub: 'Indian occasions, styled end-to-end — pick a pack for styling notes + skin-prep tips.',
+  pack_styling: 'Styling notes',
+  pack_prep: 'Skin prep',
+
+  // ingredient education
+  ing_helps: 'What helps',
+  ing_avoid: 'Go easy on',
+  ing_learn: 'Learn more →',
+  ing_card: 'Ingredient guide',
+
+  // undertone color recommendations
+  shade_reco_t: 'Colors that love your undertone',
+  shade_reco_d: 'Catalog pieces sorted for you — matching color-temperature first.',
+  shade_reco_why: 'Rule-based pick: your quiz result → matching color tags. No black box.',
+
   prog_title: 'Progress',
   prog_sub: 'Re-scan over days and watch your glow trend.',
   prog_empty: 'No scans yet — your journey starts with one selfie.',
@@ -268,6 +302,40 @@ const hi: Record<string, string> = {
   look_save: 'लुकबुक में सेव करो',
   look_saved: 'तुम्हारी लुकबुक में सेव हो गया',
   look_new: 'नया लुक',
+
+  // judge quick tour
+  tour_btn: '⚡ 60-सेकंड टूर',
+  tour_skip: 'टूर छोड़ो',
+  tour_next: 'आगे',
+  tour_back: 'पीछे',
+  tour_start: 'टूर शुरू करो',
+  tour_1t: 'स्किन लैब — अपनी स्किन जानो',
+  tour_1d: 'एक गाइडेड सेल्फी बन जाती है 12-पॉइंट AI स्किन एनालिसिस — ग्लो स्कोर, स्किन एज और पर्सनल रूटीन के साथ।',
+  tour_2t: 'शेड मैच — तुम्हारा अंडरटोन',
+  tour_2d: '3 सवालों का क्विज़ + AI टोन डिटेक्शन से तुम्हारा अंडरटोन और फाउंडेशन शेड्स मिलते हैं।',
+  tour_3t: 'ट्राई-ऑन स्टूडियो — पहले पहनकर देखो',
+  tour_3d: 'अपनी फोटो पर कैटलॉग के कपड़े ट्राई करो — ड्रैग वाले before/after स्लाइडर के साथ।',
+  tour_4t: 'कंप्लीट लुक — AI स्टाइलिस्ट',
+  tour_4d: 'एक फ्लो: स्किन स्कैन → ओकेज़न → दिखती स्टाइलिस्ट रीज़निंग → ट्राई-ऑन → वर्डिक्ट।',
+  tour_5t: 'ट्रैक करो — प्रोग्रेस और लुकबुक',
+  tour_5d: 'दोबारा स्कैन करके ग्लो ट्रेंड देखो, पसंदीदा लुक्स सेव करो, ग्लो रिपोर्ट शेयर करो।',
+
+  // indian look packs
+  pack_title: 'क्यूरेटेड लुक पैक्स',
+  pack_sub: 'भारतीय ओकेज़न, पूरी तरह स्टाइल्ड — स्टाइलिंग नोट्स + स्किन-प्रेप टिप्स के लिए पैक चुनो।',
+  pack_styling: 'स्टाइलिंग नोट्स',
+  pack_prep: 'स्किन प्रेप',
+
+  // ingredient education
+  ing_helps: 'क्या मदद करता है',
+  ing_avoid: 'इनसे बचो',
+  ing_learn: 'और जानो →',
+  ing_card: 'इंग्रेडिएंट गाइड',
+
+  // undertone color recommendations
+  shade_reco_t: 'तुम्हारे अंडरटोन से प्यार करने वाले रंग',
+  shade_reco_d: 'कैटलॉग तुम्हारे लिए सॉर्टेड — पहले मैचिंग कलर-टेम्परेचर वाले।',
+  shade_reco_why: 'रूल-बेस्ड चुनाव: तुम्हारा क्विज़ रिज़ल्ट → मैचिंग कलर टैग्स। कोई ब्लैक बॉक्स नहीं।',
 
   prog_title: 'प्रोग्रेस',
   prog_sub: 'दिनों में फिर से स्कैन करो और अपना ग्लो ट्रेंड देखो।',

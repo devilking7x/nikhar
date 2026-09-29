@@ -8,6 +8,7 @@ import TryOn from './pages/TryOn';
 import CompleteLook from './pages/CompleteLook';
 import Progress from './pages/Progress';
 import Lookbook from './pages/Lookbook';
+import Tour from './components/Tour';
 
 export type Page = 'home' | 'skin' | 'shade' | 'tryon' | 'look' | 'progress' | 'lookbook';
 
@@ -31,6 +32,7 @@ export default function App() {
   const [page, setPage] = useState<Page>(pageFromHash);
   const [lang, setLang] = useState<Lang>(() => (localStorage.getItem('nikhar-lang') === 'hi' ? 'hi' : 'en'));
   const [demo, setDemo] = useState<boolean | undefined>(undefined);
+  const [tour, setTour] = useState(false);
 
   useEffect(() => {
     const onHash = () => {
@@ -116,7 +118,7 @@ export default function App() {
       </header>
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
-        {page === 'home' && <Home lang={lang} demo={demo} go={go} />}
+        {page === 'home' && <Home lang={lang} demo={demo} go={go} onTour={() => setTour(true)} />}
         {page === 'skin' && <SkinLab lang={lang} demo={demo} />}
         {page === 'shade' && <ShadeMatch lang={lang} demo={demo} />}
         {page === 'tryon' && <TryOn lang={lang} demo={demo} />}
@@ -124,6 +126,7 @@ export default function App() {
         {page === 'progress' && <Progress lang={lang} go={go} />}
         {page === 'lookbook' && <Lookbook lang={lang} go={go} />}
       </main>
+      {tour && <Tour lang={lang} go={go} onDone={() => setTour(false)} />}
 
       <footer className="border-t border-white/10 px-4 py-6">
         <div className="mx-auto max-w-6xl text-center text-xs text-white/40">

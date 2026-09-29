@@ -6,7 +6,7 @@ import { DemoBadge, SectionTitle, ErrorBox, StageProgress } from '../components/
 import CameraCapture from '../components/CameraCapture';
 import CompareSlider from '../components/CompareSlider';
 
-const DEMO_PREVIEW_IDS = ['dress-rose', 'kurta-maroon'];
+const DEMO_PREVIEW_IDS = ['tshirt-blush', 'jacket-indigo', 'blazer-lavender', 'kurta-maroon', 'dress-rose', 'lehenga-emerald'];
 
 export default function TryOn({ lang, demo }: { lang: Lang; demo: boolean | undefined }) {
   const [catalog, setCatalog] = useState<Garment[]>(FALLBACK_GARMENTS as Garment[]);
@@ -193,13 +193,23 @@ export default function TryOn({ lang, demo }: { lang: Lang; demo: boolean | unde
         </div>
       )}
 
-      {phase === 'result' && resultUrl && personUrl && (
+      {phase === 'result' && personUrl && (
         <div className="fade-up mx-auto max-w-xl">
           <div className="mb-4 flex justify-center">
             <DemoBadge demo={resultDemo} lang={lang} />
           </div>
-          <h3 className="font-display mb-4 text-center text-2xl font-semibold">{t(lang, 'tryon_result')}</h3>
-          <CompareSlider before={personUrl} after={resultUrl} lang={lang} />
+          {resultUrl ? (
+            <>
+              <h3 className="font-display mb-4 text-center text-2xl font-semibold">{t(lang, 'tryon_result')}</h3>
+              <CompareSlider before={personUrl} after={resultUrl} lang={lang} />
+            </>
+          ) : (
+            <div className="glass rounded-3xl p-8 text-center">
+              <p className="text-sm leading-relaxed text-white/70">
+                {t(lang, 'tryon_demo_noresult')}
+              </p>
+            </div>
+          )}
           <div className="mt-5 text-center">
             <button onClick={reset} className="btn-ghost rounded-2xl px-6 py-3 text-sm">
               {t(lang, 'tryon_new')}

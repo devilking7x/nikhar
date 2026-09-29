@@ -9,7 +9,7 @@ const FEATURES = [
   { icon: '💫', t: 'home_f4t', d: 'home_f4d', go: 'look' as Page },
 ];
 
-export default function Home({ lang, demo, go }: { lang: Lang; demo: boolean | undefined; go: (p: Page) => void }) {
+export default function Home({ lang, demo, go, onTour }: { lang: Lang; demo: boolean | undefined; go: (p: Page) => void; onTour: () => void }) {
   return (
     <div>
       {/* hero */}
@@ -29,6 +29,9 @@ export default function Home({ lang, demo, go }: { lang: Lang; demo: boolean | u
           </button>
           <button onClick={() => go('look')} className="btn-ghost rounded-2xl px-8 py-3.5 text-sm">
             {t(lang, 'home_cta_look')}
+          </button>
+          <button onClick={onTour} className="btn-ghost rounded-2xl border-blush-300/40 px-8 py-3.5 text-sm font-semibold text-blush-100">
+            {t(lang, 'tour_btn')}
           </button>
         </div>
         <div className="mt-6 flex justify-center">

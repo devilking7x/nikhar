@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { api } from '../api';
+import { useEffect, useState } from 'react';
+import { api, type Garment } from '../api';
 import { t, type Lang } from '../i18n';
-import { SHADES, quizUndertone, type Undertone } from '../data';
+import { SHADES, FALLBACK_GARMENTS, quizUndertone, type Undertone } from '../data';
 import { DemoBadge, SectionTitle, ErrorBox, Spinner } from '../components/ui';
 
 const QUESTIONS = [1, 2, 3];
@@ -18,9 +18,26 @@ export default function ShadeMatch({ lang, demo }: { lang: Lang; demo: boolean |
   const [tone, setTone] = useState<{ hex: string; rgb: [number, number, number]; demo: boolean } | null>(null);
   const [detecting, setDetecting] = useState(false);
   const [error, setError] = useState('');
+  const [catalog, setCatalog] = useState<Garment[]>(FALLBACK_GARMENTS as Garment[]);
+
+  useEffect(() => {
+    api.catalog().then((c) => {
+      if (c.garments?.length) setCatalog(c.garments);
+    }).catch(() => {});
+  }, []);
 
   const undertone: Undertone | null = answers.length === 3 ? quizUndertone(answers) : null;
   const group = undertone ? SHADES.find((g) => g.undertone === undertone)! : null;
+
+  // Rule-based color recommendations: garments whose color-temperature tags
+  // match the quiz undertone float to the top. Transparent, explainable logic.
+  const ranked = undertone
+    ? [...catalog].sort((a, b) => {
+        const am = a.tones?.includes(undertone) ? 0 : 1;
+        const bm = b.tones?.includes(undertone) ? 0 : 1;
+        return am - bm;
+      })
+    : [];
 
   const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
@@ -110,6 +127,21 @@ export default function ShadeMatch({ lang, demo }: { lang: Lang; demo: boolean |
               {t(lang, 'shade_examples')}: {group.examples[0]}
             </p>
             <p className="mt-2 text-xs leading-relaxed text-white/40">{t(lang, 'shade_note')}</p>
+
+            {/* undertone-based color recommendations */}
+            <div className="mt-6 rounded-2xl bg-white/5 p-4">
+              <h4 className="font-semibold">{t(lang, 'shade_reco_t')}</h4>
+              <p className="mt-1 text-xs text-white/50">{t(lang, 'shade_reco_d')}</p>
+              <div className="mt-3 grid grid-cols-3 gap-2">
+                {ranked.slice(0, 3).map((g) => (
+                  <div key={g.id} className="overflow-hidden rounded-2xl border border-white/10">
+                    <img src={`/garments/${g.file}`} alt={g.name} className="aspect-square w-full object-cover" loading="lazy" />
+                    <p className="bg-black/40 px-2 py-1.5 text-[10px] font-medium text-white/80">{g.name}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-2.5 text-[11px] leading-relaxed text-white/35">{t(lang, 'shade_reco_why')}</p>
+            </div>
 
             <button onClick={() => { setAnswers([]); setTone(null); }} className="btn-ghost mt-5 rounded-2xl px-5 py-2.5 text-sm">
               {t(lang, 'shade_restart')}

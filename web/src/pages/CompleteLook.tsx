@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { api, type Occasion } from '../api';
 import { t, type Lang } from '../i18n';
-import { FALLBACK_OCCASIONS } from '../data';
+import { FALLBACK_OCCASIONS, PACKS } from '../data';
 import { DemoBadge, SectionTitle, ErrorBox, StageProgress, Gauge } from '../components/ui';
 import CameraCapture from '../components/CameraCapture';
 import CompareSlider from '../components/CompareSlider';
 import { downscaleDataUrl } from '../components/GlowReport';
+
+const PACK_IDS = ['diwali', 'shaadi', 'office-ethnic', 'college'];
+const PACK_EMOJI: Record<string, string> = { diwali: '🪔', shaadi: '💒', 'office-ethnic': '💼', college: '🎒' };
 
 export interface LookEntry {
   id: string;
@@ -99,6 +102,8 @@ export default function CompleteLook({ lang, demo }: { lang: Lang; demo: boolean
   };
 
   const weakest = result ? [...result.skin.concerns].sort((a, b) => a.score - b.score).slice(0, 3) : [];
+  const activePack = PACKS[occasionId]?.[lang];
+  const baseOccasions = occasions.filter((o) => !PACK_IDS.includes(o.id));
 
   return (
     <div>
@@ -109,10 +114,64 @@ export default function CompleteLook({ lang, demo }: { lang: Lang; demo: boolean
 
       {phase === 'input' && (
         <div className="mx-auto max-w-xl">
+          {/* curated indian look packs */}
+          <div className="mb-4">
+            <h3 className="font-display mb-1 text-xl font-semibold">{t(lang, 'pack_title')}</h3>
+            <p className="mb-4 text-xs text-white/45">{t(lang, 'pack_sub')}</p>
+            <div className="grid grid-cols-2 gap-3">
+              {PACK_IDS.map((pid) => {
+                const p = PACKS[pid]?.[lang];
+                if (!p) return null;
+                const active = occasionId === pid;
+                return (
+                  <button
+                    key={pid}
+                    onClick={() => setOccasionId(pid)}
+                    className={`rounded-3xl border-2 p-4 text-left transition ${
+                      active
+                        ? 'border-blush-300 bg-blush-300/10'
+                        : 'glass border-transparent hover:border-white/20'
+                    }`}
+                  >
+                    <span className="text-2xl">{PACK_EMOJI[pid]}</span>
+                    <p className="mt-2 text-sm font-semibold">{p.tagline}</p>
+                    <p className="mt-0.5 line-clamp-2 text-[11px] leading-relaxed text-white/50">{p.styling[0]}</p>
+                  </button>
+                );
+              })}
+            </div>
+            {activePack && (
+              <div className="glass fade-up mt-3 rounded-3xl border-blush-300/25 p-5">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-blush-200">{t(lang, 'pack_styling')}</p>
+                    <ul className="space-y-1.5">
+                      {activePack.styling.map((s, i) => (
+                        <li key={i} className="flex gap-2 text-[13px] leading-relaxed text-white/70">
+                          <span className="text-blush-300">✦</span>{s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-violet-200">{t(lang, 'pack_prep')}</p>
+                    <ul className="space-y-1.5">
+                      {activePack.prep.map((s, i) => (
+                        <li key={i} className="flex gap-2 text-[13px] leading-relaxed text-white/70">
+                          <span className="text-violet-300">✦</span>{s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
           <div className="glass mb-4 rounded-3xl p-6">
             <h3 className="mb-4 font-semibold">{t(lang, 'look_occasion')}</h3>
             <div className="flex flex-wrap gap-2">
-              {occasions.map((o) => (
+              {baseOccasions.map((o) => (
                 <button
                   key={o.id}
                   onClick={() => setOccasionId(o.id)}
