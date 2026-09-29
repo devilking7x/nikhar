@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: nikhar
+    runtime: node
+    region: singapore
+    plan: free
+    buildCommand: npm run install:all && npm run build
+    startCommand: npm start
+    envVars:
+      - key: YOUCAM_API_KEY
+        sync: false
+      - key: NODE_ENV
+        value: production
