@@ -64,8 +64,8 @@ export default function Progress({ lang, go }: { lang: Lang; go: (p: Page) => vo
                       {new Date(e.date).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}
                     </p>
                     <p className="text-xs text-white/45">
-                      {e.demo ? 'Demo' : 'Live'}
-                      {e.skinAge != null ? ` · Skin age ${e.skinAge}` : ''}
+                      {t(lang, e.demo ? 'c_demo' : 'c_live')}
+                      {e.skinAge != null ? ` · ${t(lang, 'prog_skin_age')} ${e.skinAge}` : ''}
                     </p>
                   </div>
                   <span className="font-display text-2xl font-semibold text-blush-200">{Math.round(e.glowScore)}</span>

@@ -133,7 +133,7 @@ export default function TryOn({ lang, demo }: { lang: Lang; demo: boolean | unde
                   >
                     <img src={`/garments/${g.file}`} alt={g.name} className="aspect-square w-full object-cover" loading="lazy" />
                     {demo && DEMO_PREVIEW_IDS.includes(g.id) && (
-                      <span className="absolute left-1 top-1 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-medium text-blush-200">Demo</span>
+                      <span className="absolute left-1 top-1 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-medium text-blush-200">{t(lang, 'c_demo')}</span>
                     )}
                     <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent px-1.5 pb-1.5 pt-4 text-left text-[10px] font-medium text-white">
                       {g.name}

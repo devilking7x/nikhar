@@ -34,14 +34,17 @@ app.get('*', (req, res, next) => {
   res.sendFile(path.join(WEB_DIST, 'index.html'));
 });
 
-// Upload / validation errors -> clean 400 JSON.
+// Upload / validation errors -> clean JSON (preserve 413 for oversized bodies).
 app.use((err: any, _req: express.Request, res: express.Response, next: express.NextFunction) => {
   if (!err) return next();
+  const code = err.status === 413 ? 413 : 400;
   const msg =
     err.code === 'LIMIT_FILE_SIZE'
       ? 'Image must be smaller than 8MB.'
-      : err.message || 'Upload failed.';
-  res.status(400).json({ error: msg });
+      : err.status === 413
+        ? 'Request body too large.'
+        : err.message || 'Upload failed.';
+  res.status(code).json({ error: msg });
 });
 
 const port = Number(process.env.PORT || 8080);

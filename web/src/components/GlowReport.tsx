@@ -116,13 +116,40 @@ export async function renderGlowReport(inp: ReportInput): Promise<Blob> {
   ctx.textAlign = 'center';
   ctx.fillStyle = inp.demo ? '#f7b9d0' : '#6ee7b7';
   ctx.font = '600 28px Outfit, sans-serif';
-  ctx.fillText(inp.demo ? 'DEMO PREVIEW' : 'LIVE ANALYSIS', W / 2, fy);
+  ctx.fillText(t(inp.lang, inp.demo ? 'report_demo' : 'report_live'), W / 2, fy);
   ctx.fillStyle = 'rgba(255,255,255,0.45)';
   ctx.font = '400 24px Outfit, sans-serif';
   ctx.fillText(t(inp.lang, 'home_disclaimer'), W / 2, fy + 44, W - 160);
 
   return new Promise((resolve, reject) => {
     canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('render failed'))), 'image/png');
+  });
+}
+
+/** Stamp a demo banner onto an image data-URL so shared/saved renders stay honest. */
+export function watermarkDemo(dataUrl: string, label: string): Promise<string> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas');
+      c.width = img.width;
+      c.height = img.height;
+      const ctx = c.getContext('2d')!;
+      ctx.drawImage(img, 0, 0);
+      const bh = Math.max(46, Math.round(img.height * 0.09));
+      const g = ctx.createLinearGradient(0, img.height - bh, 0, img.height);
+      g.addColorStop(0, 'rgba(10,5,12,0)');
+      g.addColorStop(1, 'rgba(10,5,12,0.88)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, img.height - bh, img.width, bh);
+      ctx.fillStyle = '#f7b9d0';
+      ctx.font = `600 ${Math.round(bh * 0.4)}px Outfit, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(label, img.width / 2, img.height - bh * 0.34);
+      resolve(c.toDataURL('image/jpeg', 0.9));
+    };
+    img.onerror = () => resolve(dataUrl);
+    img.src = dataUrl;
   });
 }
 

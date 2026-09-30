@@ -4,7 +4,7 @@
 
 **Nikhār AI** unifies **YouCam Skin Analysis** and **generative Apparel Virtual Try-On** in one guided, bilingual (Hindi/English) journey: scan your skin → get your glow score, skin age, AM/PM routine and foundation shade matches → pick an occasion and watch the AI stylist render a complete try-on look on you.
 
-Built for the **YouCam API Skin AI & Apparel VTO Hackathon 2026**.
+Built for the **YouCam API Skin AI & eCommerce VTO Hackathon 2026** (Devpost, submissions close Nov 2, 2026).
 
 > **Honesty first:** without a `YOUCAM_API_KEY`, the app runs in a clearly-labeled **demo mode** — every mock response carries `demo: true` and the UI shows a "Demo preview" badge. No fake metrics are ever presented as real analysis.
 

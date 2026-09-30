@@ -32,6 +32,22 @@ const upload = multer({
 
 const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+/** Sniff real image magic bytes — mimetype alone can lie (e.g. renamed .txt). */
+function sniffImage(buf: Buffer): 'jpeg' | 'png' | 'webp' | null {
+  if (buf.length > 2 && buf[0] === 0xff && buf[1] === 0xd8) return 'jpeg';
+  if (buf.length > 3 && buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47)
+    return 'png';
+  if (
+    buf.length > 11 &&
+    buf.toString('ascii', 0, 4) === 'RIFF' &&
+    buf.toString('ascii', 8, 12) === 'WEBP'
+  )
+    return 'webp';
+  return null;
+}
+
+const invalidImage = { error: 'That file is not a valid image — please upload a real JPG, PNG or WebP photo.' };
+
 // ---------------------------------------------------------------- jobs --
 export interface Job {
   id: string;
@@ -172,6 +188,7 @@ apiRouter.get('/youcam/status', async (_req, res) => {
 
 apiRouter.post('/jobs/skin', upload.single('photo'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'A photo is required (JPG, PNG or WebP, max 8MB).' });
+  if (!sniffImage(req.file.buffer)) return res.status(400).json(invalidImage);
   const demo = !isConfigured();
   const job = newJob('skin', ['Uploading photo', 'Analysing skin', 'Preparing results'], demo);
   res.status(202).json({ jobId: job.id });
@@ -187,6 +204,8 @@ apiRouter.post('/jobs/vto', upload.fields([{ name: 'person', maxCount: 1 }, { na
     return res.status(400).json({ error: 'Both a person photo and a garment photo are required.' });
   if (!(GARMENT_CATEGORIES as string[]).includes(category))
     return res.status(400).json({ error: `Invalid category. Use one of: ${GARMENT_CATEGORIES.join(', ')}` });
+  if (!sniffImage(person.buffer) || !sniffImage(garment.buffer))
+    return res.status(400).json(invalidImage);
   const garmentId = String(req.body?.garmentId || '');
   const demo = !isConfigured();
   const job = newJob('vto', ['Uploading photos', 'Trying on outfit', 'Preparing result'], demo);
@@ -199,6 +218,7 @@ apiRouter.post('/jobs/look', upload.single('photo'), (req, res) => {
   const occasion = String(req.body?.occasion || 'casual');
   if (!OCCASIONS.some((o) => o.id === occasion))
     return res.status(400).json({ error: `Invalid occasion. Use one of: ${OCCASIONS.map((o) => o.id).join(', ')}` });
+  if (!sniffImage(req.file.buffer)) return res.status(400).json(invalidImage);
   const demo = !isConfigured();
   const job = newJob('look', ['Analysing skin', 'Styling your look', 'Rendering try-on', 'Final verdict'], demo);
   res.status(202).json({ jobId: job.id });
@@ -212,6 +232,7 @@ apiRouter.post('/jobs/tone', upload.single('photo'), (req, res) => {
     return res
       .status(400)
       .json({ error: 'Skin tone analysis needs a JPG photo — please upload a .jpg/.jpeg selfie.' });
+  if (!sniffImage(req.file.buffer)) return res.status(400).json(invalidImage);
   const job = newJob('tone', ['Uploading photo', 'Reading color tones'], !live);
   res.status(202).json({ jobId: job.id });
   void runToneJob(job, req.file.buffer);

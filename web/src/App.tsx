@@ -32,6 +32,7 @@ export default function App() {
   const [page, setPage] = useState<Page>(pageFromHash);
   const [lang, setLang] = useState<Lang>(() => (localStorage.getItem('nikhar-lang') === 'hi' ? 'hi' : 'en'));
   const [demo, setDemo] = useState<boolean | undefined>(undefined);
+  const [balance, setBalance] = useState<number | null>(null);
   const [tour, setTour] = useState(false);
 
   useEffect(() => {
@@ -45,10 +46,19 @@ export default function App() {
 
   useEffect(() => {
     localStorage.setItem('nikhar-lang', lang);
+    document.documentElement.lang = lang;
+    document.title =
+      lang === 'hi' ? 'निखार AI — निखार, AI के साथ' : 'Nikhār AI — Glow, Styled by AI';
   }, [lang]);
 
   useEffect(() => {
-    api.status().then((s) => setDemo(s.demo)).catch(() => setDemo(true));
+    api
+      .status()
+      .then((s) => {
+        setDemo(s.demo);
+        setBalance(s.balance);
+      })
+      .catch(() => setDemo(true));
   }, []);
 
   const go = (p: Page) => {
@@ -82,11 +92,16 @@ export default function App() {
           <div className="flex items-center gap-2">
             {demo === undefined ? null : demo ? (
               <span className="hidden items-center gap-1.5 rounded-full bg-blush-300/15 px-3 py-1 text-[11px] font-medium text-blush-200 sm:inline-flex">
-                <span className="h-1.5 w-1.5 rounded-full bg-blush-300 pulse-soft" /> Demo
+                <span className="h-1.5 w-1.5 rounded-full bg-blush-300 pulse-soft" /> {t(lang, 'c_demo')}
               </span>
             ) : (
               <span className="hidden items-center gap-1.5 rounded-full bg-emerald-300/15 px-3 py-1 text-[11px] font-medium text-emerald-200 sm:inline-flex">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" /> Live
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" /> {t(lang, 'c_live')}
+              </span>
+            )}
+            {demo === false && balance != null && (
+              <span className="hidden rounded-full bg-white/8 px-3 py-1 text-[11px] text-white/55 md:inline-flex">
+                {t(lang, 'balance_units')}: {balance.toLocaleString()}
               </span>
             )}
             <button

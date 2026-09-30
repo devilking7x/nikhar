@@ -1,7 +1,7 @@
 /** Judge Quick Tour — a guided 60-second walkthrough for hackathon judges.
  *  Auto-advances through the app's key pages with a spotlight caption card.
  *  Zero friction: no clicks needed, Skippable anytime. */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { t, type Lang } from '../i18n';
 import type { Page } from '../App';
 
@@ -17,24 +17,29 @@ const STEPS: TourStep[] = [
   { page: 'tryon', titleKey: 'tour_3t', descKey: 'tour_3d' },
   { page: 'look', titleKey: 'tour_4t', descKey: 'tour_4d' },
   { page: 'progress', titleKey: 'tour_5t', descKey: 'tour_5d' },
+  { page: 'lookbook', titleKey: 'tour_6t', descKey: 'tour_6d' },
 ];
 
-const STEP_MS = 9000;
+const STEP_MS = 10000;
 
 export default function Tour({ lang, go, onDone }: { lang: Lang; go: (p: Page) => void; onDone: () => void }) {
   const [i, setI] = useState(0);
   const finished = i >= STEPS.length;
+  // go is recreated on every App render — keep it in a ref so the
+  // auto-advance timer never resets when the parent re-renders.
+  const goRef = useRef(go);
+  goRef.current = go;
 
   useEffect(() => {
     if (finished) return;
-    go(STEPS[i].page);
+    goRef.current(STEPS[i].page);
     const id = window.setTimeout(() => setI((v) => v + 1), STEP_MS);
     return () => window.clearTimeout(id);
-  }, [i, finished, go]);
+  }, [i, finished]);
 
   useEffect(() => {
     if (finished) {
-      go('home');
+      goRef.current('home');
       onDone();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

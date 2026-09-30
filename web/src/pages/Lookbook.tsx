@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { t, type Lang } from '../i18n';
 import { SectionTitle, ErrorBox } from '../components/ui';
-import { shareOrDownload } from '../components/GlowReport';
+import { shareOrDownload, watermarkDemo } from '../components/GlowReport';
 import type { LookEntry } from './CompleteLook';
 import type { Page } from '../App';
 
@@ -25,7 +25,9 @@ export default function Lookbook({ lang, go }: { lang: Lang; go: (p: Page) => vo
 
   const share = async (l: LookEntry) => {
     try {
-      const blob = await (await fetch(l.image)).blob();
+      let img = l.image;
+      if (l.demo) img = await watermarkDemo(l.image, `${t(lang, 'report_demo')} · Nikhār AI`);
+      const blob = await (await fetch(img)).blob();
       await shareOrDownload(blob, `nikhar-look-${l.occasion}.jpg`, 'Nikhār AI Look');
     } catch {
       setError(t(lang, 'c_error'));
@@ -33,8 +35,10 @@ export default function Lookbook({ lang, go }: { lang: Lang; go: (p: Page) => vo
   };
 
   const download = async (l: LookEntry) => {
+    let img = l.image;
+    if (l.demo) img = await watermarkDemo(l.image, `${t(lang, 'report_demo')} · Nikhār AI`);
     const a = document.createElement('a');
-    a.href = l.image;
+    a.href = img;
     a.download = `nikhar-look-${l.occasion}.jpg`;
     a.click();
   };
@@ -60,7 +64,7 @@ export default function Lookbook({ lang, go }: { lang: Lang; go: (p: Page) => vo
                 <div className="flex items-center justify-between">
                   <p className="font-semibold">{l.occasionName}</p>
                   <span className="rounded-full bg-white/8 px-2.5 py-0.5 text-[11px] text-white/55">
-                    {l.demo ? 'Demo' : 'Live'}
+                    {t(lang, l.demo ? 'c_demo' : 'c_live')}
                     {l.glowScore != null ? ` · ✦${Math.round(l.glowScore)}` : ''}
                   </span>
                 </div>

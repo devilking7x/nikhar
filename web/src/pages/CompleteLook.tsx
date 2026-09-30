@@ -88,7 +88,7 @@ export default function CompleteLook({ lang, demo }: { lang: Lang; demo: boolean
       localStorage.setItem('nikhar-lookbook', JSON.stringify(arr.slice(0, 30)));
       setSaved(true);
     } catch {
-      setError('Lookbook is full — delete an old look first.');
+      setError(t(lang, 'book_full'));
     }
   };
 

@@ -14,7 +14,7 @@ const en: Record<string, string> = {
   live_badge: 'Live — YouCam connected',
   balance_units: 'API units left',
 
-  home_kicker: 'YouCam API Hackathon 2026 · Skin AI + Apparel VTO',
+  home_kicker: 'YouCam API Hackathon 2026 · Skin AI + eCommerce VTO',
   home_hero_a: 'Know your skin.',
   home_hero_b: 'Wear your glow.',
   home_hero_sub:
@@ -43,7 +43,6 @@ const en: Record<string, string> = {
   skin_sub: 'Guided selfie → YouCam AI Skin Analysis → your glow report.',
   skin_upload: 'Upload selfie',
   skin_camera: 'Use camera',
-  skin_start: 'Start camera',
   skin_capture: 'Capture (3s)',
   skin_capturing: 'Capturing…',
   skin_retake: 'Retake',
@@ -120,13 +119,13 @@ const en: Record<string, string> = {
   look_save: 'Save to lookbook',
   look_saved: 'Saved to your lookbook',
   look_new: 'New look',
+  book_full: 'Lookbook is full — delete an old look first.',
 
   // judge quick tour
   tour_btn: '⚡ 60-Second Tour',
   tour_skip: 'Skip tour',
   tour_next: 'Next',
   tour_back: 'Back',
-  tour_start: 'Start tour',
   tour_1t: 'Skin Lab — know your skin',
   tour_1d: 'A guided selfie becomes a 12-concern AI skin analysis with glow score, skin age and a personal routine.',
   tour_2t: 'Shade Match — your undertone',
@@ -135,8 +134,10 @@ const en: Record<string, string> = {
   tour_3d: 'Try catalog outfits on your photo with a draggable before/after slider.',
   tour_4t: 'Complete Look — the AI stylist',
   tour_4d: 'One flow: skin scan → occasion → visible stylist reasoning → rendered try-on → verdict.',
-  tour_5t: 'Track it — progress & lookbook',
-  tour_5d: 'Re-scan to watch your glow trend, save favourite looks, and share your glow report.',
+  tour_5t: 'Track it — progress',
+  tour_5d: 'Re-scan over days to watch your glow score trend upward.',
+  tour_6t: 'Lookbook — your saved looks',
+  tour_6d: 'Every finished look is saved here with its stylist verdict — share or revisit anytime.',
 
   // indian look packs
   pack_title: 'Curated look packs',
@@ -170,17 +171,19 @@ const en: Record<string, string> = {
   book_share: 'Share',
   book_delete: 'Delete',
 
-  c_loading: 'Working…',
   c_error: 'Something went wrong',
   c_retry: 'Try again',
-  c_back: 'Back',
   c_close: 'Close',
   c_download: 'Download',
-  c_share: 'Share',
   c_camera_denied: 'Camera access was denied — you can upload a photo instead.',
   c_file_big: 'Please choose an image under 8MB.',
   c_stage: 'Step',
   c_of: 'of',
+  c_demo: 'Demo',
+  c_live: 'Live',
+  report_demo: 'DEMO PREVIEW',
+  report_live: 'LIVE ANALYSIS',
+  prog_skin_age: 'Skin age',
 };
 
 const hi: Record<string, string> = {
@@ -196,7 +199,7 @@ const hi: Record<string, string> = {
   live_badge: 'लाइव — YouCam कनेक्टेड',
   balance_units: 'API यूनिट्स बची',
 
-  home_kicker: 'YouCam API हैकाथॉन 2026 · स्किन AI + अपैरल VTO',
+  home_kicker: 'YouCam API हैकाथॉन 2026 · स्किन AI + ई-कॉमर्स VTO',
   home_hero_a: 'अपनी स्किन को जानो।',
   home_hero_b: 'अपना निखार पहनो।',
   home_hero_sub:
@@ -225,7 +228,6 @@ const hi: Record<string, string> = {
   skin_sub: 'गाइडेड सेल्फी → YouCam AI स्किन एनालिसिस → तुम्हारी ग्लो रिपोर्ट।',
   skin_upload: 'सेल्फी अपलोड करो',
   skin_camera: 'कैमरा इस्तेमाल करो',
-  skin_start: 'कैमरा शुरू करो',
   skin_capture: 'कैप्चर (3s)',
   skin_capturing: 'कैप्चर हो रहा…',
   skin_retake: 'फिर से लो',
@@ -302,13 +304,13 @@ const hi: Record<string, string> = {
   look_save: 'लुकबुक में सेव करो',
   look_saved: 'तुम्हारी लुकबुक में सेव हो गया',
   look_new: 'नया लुक',
+  book_full: 'लुकबुक भर गई है — पहले कोई पुराना लुक डिलीट करो।',
 
   // judge quick tour
   tour_btn: '⚡ 60-सेकंड टूर',
   tour_skip: 'टूर छोड़ो',
   tour_next: 'आगे',
   tour_back: 'पीछे',
-  tour_start: 'टूर शुरू करो',
   tour_1t: 'स्किन लैब — अपनी स्किन जानो',
   tour_1d: 'एक गाइडेड सेल्फी बन जाती है 12-पॉइंट AI स्किन एनालिसिस — ग्लो स्कोर, स्किन एज और पर्सनल रूटीन के साथ।',
   tour_2t: 'शेड मैच — तुम्हारा अंडरटोन',
@@ -317,8 +319,10 @@ const hi: Record<string, string> = {
   tour_3d: 'अपनी फोटो पर कैटलॉग के कपड़े ट्राई करो — ड्रैग वाले before/after स्लाइडर के साथ।',
   tour_4t: 'कंप्लीट लुक — AI स्टाइलिस्ट',
   tour_4d: 'एक फ्लो: स्किन स्कैन → ओकेज़न → दिखती स्टाइलिस्ट रीज़निंग → ट्राई-ऑन → वर्डिक्ट।',
-  tour_5t: 'ट्रैक करो — प्रोग्रेस और लुकबुक',
-  tour_5d: 'दोबारा स्कैन करके ग्लो ट्रेंड देखो, पसंदीदा लुक्स सेव करो, ग्लो रिपोर्ट शेयर करो।',
+  tour_5t: 'ट्रैक करो — प्रोग्रेस',
+  tour_5d: 'दिनों में दोबारा स्कैन करके अपना ग्लो स्कोर ट्रेंड बढ़ता देखो।',
+  tour_6t: 'लुकबुक — तुम्हारे सेव किए लुक्स',
+  tour_6d: 'हर तैयार लुक अपने स्टाइलिस्ट वर्डिक्ट के साथ यहाँ सेव होता है — कभी भी शेयर करो या दोबारा देखो।',
 
   // indian look packs
   pack_title: 'क्यूरेटेड लुक पैक्स',
@@ -352,17 +356,19 @@ const hi: Record<string, string> = {
   book_share: 'शेयर',
   book_delete: 'डिलीट',
 
-  c_loading: 'काम हो रहा…',
   c_error: 'कुछ गड़बड़ हुई',
   c_retry: 'फिर कोशिश करो',
-  c_back: 'वापस',
   c_close: 'बंद करो',
   c_download: 'डाउनलोड',
-  c_share: 'शेयर',
   c_camera_denied: 'कैमरा की अनुमति नहीं मिली — फोटो अपलोड कर सकते हो।',
   c_file_big: '8MB से छोटी इमेज चुनो।',
   c_stage: 'स्टेप',
   c_of: 'का',
+  c_demo: 'डेमो',
+  c_live: 'लाइव',
+  report_demo: 'डेमो प्रीव्यू',
+  report_live: 'लाइव एनालिसिस',
+  prog_skin_age: 'स्किन एज',
 };
 
 export const STR: Record<Lang, Record<string, string>> = { en, hi };

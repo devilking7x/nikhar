@@ -16,6 +16,7 @@ export default function CameraCapture({
   const streamRef = useRef<MediaStream | null>(null);
   const [mode, setMode] = useState<'idle' | 'live' | 'countdown' | 'denied'>('idle');
   const [count, setCount] = useState(3);
+  const [fileError, setFileError] = useState('');
 
   const stop = () => {
     streamRef.current?.getTracks().forEach((tr) => tr.stop());
@@ -95,9 +96,11 @@ export default function CameraCapture({
     const f = e.target.files?.[0];
     if (!f) return;
     if (f.size > 8 * 1024 * 1024) {
-      alert(t(lang, 'c_file_big'));
+      setFileError(t(lang, 'c_file_big'));
+      e.target.value = '';
       return;
     }
+    setFileError('');
     onCapture(f);
     e.target.value = '';
   };
@@ -116,6 +119,7 @@ export default function CameraCapture({
             </label>
           </div>
           <p className="text-xs text-white/40">{t(lang, 'skin_choose')}</p>
+          {fileError && <p className="text-xs font-medium text-rose-200">{fileError}</p>}
         </div>
       )}
 
@@ -126,6 +130,7 @@ export default function CameraCapture({
             {t(lang, 'skin_upload')}
             <input type="file" accept="image/jpeg,image/png,image/webp" onChange={onFile} />
           </label>
+          {fileError && <p className="mt-3 text-xs font-medium text-rose-200">{fileError}</p>}
         </div>
       )}
 
