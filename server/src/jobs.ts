@@ -102,6 +102,7 @@ const CONCERN_LABELS: Record<string, string> = {
   age_spot: 'Dark spots',
   moisture: 'Hydration',
   dark_circle: 'Dark circles',
+  dark_circle_v2: 'Dark circles',
   eye_bag: 'Eye bags',
   wrinkle: 'Fine lines',
   firmness: 'Firmness',
