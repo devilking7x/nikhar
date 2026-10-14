@@ -172,7 +172,7 @@ const SKIN_ACTIONS = [
   'age_spot',
   'radiance',
   'moisture',
-  'dark_circle',
+  'dark_circle_v2', // docs: SD action is dark_circle_v2, not dark_circle
   'eye_bag',
   'firmness',
 ];
